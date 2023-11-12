@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.car.dao.MinlogMapper">
+  <resultMap id="BaseResultMap" type="com.car.model.Minlog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="material_id" property="materialId" jdbcType="INTEGER" />
+  <result column="num" property="num" jdbcType="INTEGER" />
+  <result column="in_remark" property="inRemark" jdbcType="VARCHAR" />
+  <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+  <result column="is_comfirm" property="isComfirm" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+     id,material_id,num,in_remark,create_date,is_comfirm
+  </sql>
+  <select id="selectByExample" parameterType="com.car.model.MinlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from minlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+     <if test="startRow >= 0 and pageRows > 0">
+  limit ${startRow},${pageRows}
+  </if>
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from minlog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+   delete from minlog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.car.model.MinlogExample">
+    delete from minlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.car.model.Minlog">
+      <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+      insert into minlog (material_id,num,in_remark,create_date,is_comfirm)
+      values (	#{id,jdbcType=INTEGER},	#{materialId,jdbcType=INTEGER},	#{num,jdbcType=INTEGER},	#{inRemark,jdbcType=VARCHAR},	#{createDate,jdbcType=VARCHAR},	#{isComfirm,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.car.model.Minlog">
+   <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+    insert into minlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+	  id,
+ </if>
+<if test="materialId != null" >
+	  material_id,
+ </if>
+<if test="num != null" >
+	  num,
+ </if>
+<if test="inRemark != null" >
+	  in_remark,
+ </if>
+<if test="createDate != null" >
+	  create_date,
+ </if>
+<if test="isComfirm != null" >
+	  is_comfirm
+ </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+         <if test="id != null" >
+	 #{id,jdbcType=INTEGER},
+	 </if>
+  <if test="materialId != null" >
+	 #{materialId,jdbcType=INTEGER},
+	 </if>
+  <if test="num != null" >
+	 #{num,jdbcType=INTEGER},
+	 </if>
+  <if test="inRemark != null" >
+	 #{inRemark,jdbcType=VARCHAR},
+	 </if>
+  <if test="createDate != null" >
+	 #{createDate,jdbcType=VARCHAR},
+	 </if>
+  <if test="isComfirm != null" >
+	 #{isComfirm,jdbcType=INTEGER},
+	 </if>
+
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.car.model.MinlogExample" resultType="java.lang.Long">
+    select count(*) from minlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update minlog
+    <set>
+       <if test="record.materialId != null" >
+	 material_id = #{record.materialId,jdbcType=INTEGER},
+</if>
+ <if test="record.num != null" >
+	 num = #{record.num,jdbcType=INTEGER},
+</if>
+ <if test="record.inRemark != null" >
+	 in_remark = #{record.inRemark,jdbcType=VARCHAR},
+</if>
+ <if test="record.createDate != null" >
+	 create_date = #{record.createDate,jdbcType=VARCHAR},
+</if>
+ <if test="record.isComfirm != null" >
+	 is_comfirm = #{record.isComfirm,jdbcType=INTEGER}
+</if>
+
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update minlog
+    set 
+    				material_id = #{record.materialId,jdbcType=INTEGER},	num = #{record.num,jdbcType=INTEGER},	in_remark = #{record.inRemark,jdbcType=VARCHAR},	create_date = #{record.createDate,jdbcType=VARCHAR},	is_comfirm = #{record.isComfirm,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.car.model.Minlog">
+    update minlog
+    <set>
+       <if test="materialId != null" >
+	 material_id = #{materialId,jdbcType=INTEGER},
+</if>
+ <if test="num != null" >
+	 num = #{num,jdbcType=INTEGER},
+</if>
+ <if test="inRemark != null" >
+	 in_remark = #{inRemark,jdbcType=VARCHAR},
+</if>
+ <if test="createDate != null" >
+	 create_date = #{createDate,jdbcType=VARCHAR},
+</if>
+ <if test="isComfirm != null" >
+	 is_comfirm = #{isComfirm,jdbcType=INTEGER}
+</if>
+
+    </set>
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.car.model.Minlog">
+    update minlog
+    set 
+     			material_id = #{materialId,jdbcType=INTEGER},	num = #{num,jdbcType=INTEGER},	in_remark = #{inRemark,jdbcType=VARCHAR},	create_date = #{createDate,jdbcType=VARCHAR},	is_comfirm = #{isComfirm,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.car.dao.MoutlogMapper">
+  <resultMap id="BaseResultMap" type="com.car.model.Moutlog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="material_id" property="materialId" jdbcType="INTEGER" />
+  <result column="mno" property="mno" jdbcType="VARCHAR" />
+  <result column="mname" property="mname" jdbcType="VARCHAR" />
+  <result column="num" property="num" jdbcType="INTEGER" />
+  <result column="remark" property="remark" jdbcType="VARCHAR" />
+  <result column="ck_date" property="ckDate" jdbcType="VARCHAR" />
+  <result column="is_comfirm" property="isComfirm" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+     id,material_id,mno,mname,num,remark,ck_date,is_comfirm
+  </sql>
+  <select id="selectByExample" parameterType="com.car.model.MoutlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from moutlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+     <if test="startRow >= 0 and pageRows > 0">
+  limit ${startRow},${pageRows}
+  </if>
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from moutlog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+   delete from moutlog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.car.model.MoutlogExample">
+    delete from moutlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.car.model.Moutlog">
+      <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+      insert into moutlog (material_id,mno,mname,num,remark,ck_date,is_comfirm)
+      values (	#{id,jdbcType=INTEGER},	#{materialId,jdbcType=INTEGER},	#{mno,jdbcType=VARCHAR},	#{mname,jdbcType=VARCHAR},	#{num,jdbcType=INTEGER},	#{remark,jdbcType=VARCHAR},	#{ckDate,jdbcType=VARCHAR},	#{isComfirm,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.car.model.Moutlog">
+   <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+    insert into moutlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+	  id,
+ </if>
+<if test="materialId != null" >
+	  material_id,
+ </if>
+<if test="mno != null" >
+	  mno,
+ </if>
+<if test="mname != null" >
+	  mname,
+ </if>
+<if test="num != null" >
+	  num,
+ </if>
+<if test="remark != null" >
+	  remark,
+ </if>
+<if test="ckDate != null" >
+	  ck_date,
+ </if>
+<if test="isComfirm != null" >
+	  is_comfirm
+ </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+         <if test="id != null" >
+	 #{id,jdbcType=INTEGER},
+	 </if>
+  <if test="materialId != null" >
+	 #{materialId,jdbcType=INTEGER},
+	 </if>
+  <if test="mno != null" >
+	 #{mno,jdbcType=VARCHAR},
+	 </if>
+  <if test="mname != null" >
+	 #{mname,jdbcType=VARCHAR},
+	 </if>
+  <if test="num != null" >
+	 #{num,jdbcType=INTEGER},
+	 </if>
+  <if test="remark != null" >
+	 #{remark,jdbcType=VARCHAR},
+	 </if>
+  <if test="ckDate != null" >
+	 #{ckDate,jdbcType=VARCHAR},
+	 </if>
+  <if test="isComfirm != null" >
+	 #{isComfirm,jdbcType=INTEGER},
+	 </if>
+
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.car.model.MoutlogExample" resultType="java.lang.Long">
+    select count(*) from moutlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update moutlog
+    <set>
+       <if test="record.materialId != null" >
+	 material_id = #{record.materialId,jdbcType=INTEGER},
+</if>
+ <if test="record.mno != null" >
+	 mno = #{record.mno,jdbcType=VARCHAR},
+</if>
+ <if test="record.mname != null" >
+	 mname = #{record.mname,jdbcType=VARCHAR},
+</if>
+ <if test="record.num != null" >
+	 num = #{record.num,jdbcType=INTEGER},
+</if>
+ <if test="record.remark != null" >
+	 remark = #{record.remark,jdbcType=VARCHAR},
+</if>
+ <if test="record.ckDate != null" >
+	 ck_date = #{record.ckDate,jdbcType=VARCHAR},
+</if>
+ <if test="record.isComfirm != null" >
+	 is_comfirm = #{record.isComfirm,jdbcType=INTEGER}
+</if>
+
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update moutlog
+    set 
+    				material_id = #{record.materialId,jdbcType=INTEGER},	mno = #{record.mno,jdbcType=VARCHAR},	mname = #{record.mname,jdbcType=VARCHAR},	num = #{record.num,jdbcType=INTEGER},	remark = #{record.remark,jdbcType=VARCHAR},	ck_date = #{record.ckDate,jdbcType=VARCHAR},	is_comfirm = #{record.isComfirm,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.car.model.Moutlog">
+    update moutlog
+    <set>
+       <if test="materialId != null" >
+	 material_id = #{materialId,jdbcType=INTEGER},
+</if>
+ <if test="mno != null" >
+	 mno = #{mno,jdbcType=VARCHAR},
+</if>
+ <if test="mname != null" >
+	 mname = #{mname,jdbcType=VARCHAR},
+</if>
+ <if test="num != null" >
+	 num = #{num,jdbcType=INTEGER},
+</if>
+ <if test="remark != null" >
+	 remark = #{remark,jdbcType=VARCHAR},
+</if>
+ <if test="ckDate != null" >
+	 ck_date = #{ckDate,jdbcType=VARCHAR},
+</if>
+ <if test="isComfirm != null" >
+	 is_comfirm = #{isComfirm,jdbcType=INTEGER}
+</if>
+
+    </set>
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.car.model.Moutlog">
+    update moutlog
+    set 
+     			material_id = #{materialId,jdbcType=INTEGER},	mno = #{mno,jdbcType=VARCHAR},	mname = #{mname,jdbcType=VARCHAR},	num = #{num,jdbcType=INTEGER},	remark = #{remark,jdbcType=VARCHAR},	ck_date = #{ckDate,jdbcType=VARCHAR},	is_comfirm = #{isComfirm,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

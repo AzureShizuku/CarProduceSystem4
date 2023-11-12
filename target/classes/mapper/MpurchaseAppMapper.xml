@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.car.dao.MpurchaseAppMapper">
+  <resultMap id="BaseResultMap" type="com.car.model.MpurchaseApp">
+    <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="no" property="no" jdbcType="VARCHAR" />
+  <result column="name" property="name" jdbcType="VARCHAR" />
+  <result column="gg" property="gg" jdbcType="VARCHAR" />
+  <result column="mtype" property="mtype" jdbcType="VARCHAR" />
+  <result column="pintro" property="pintro" jdbcType="VARCHAR" />
+  <result column="mstandard" property="mstandard" jdbcType="VARCHAR" />
+  <result column="num" property="num" jdbcType="INTEGER" />
+  <result column="price" property="price" jdbcType="DOUBLE" />
+  <result column="plan_price" property="planPrice" jdbcType="DOUBLE" />
+  <result column="total_amount" property="totalAmount" jdbcType="DOUBLE" />
+  <result column="dh_date" property="dhDate" jdbcType="VARCHAR" />
+  <result column="check_status" property="checkStatus" jdbcType="INTEGER" />
+  <result column="shbz" property="shbz" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+     id,no,name,gg,mtype,pintro,mstandard,num,price,plan_price,total_amount,dh_date,check_status,shbz
+  </sql>
+  <select id="selectByExample" parameterType="com.car.model.MpurchaseAppExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mpurchase_app
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+     <if test="startRow >= 0 and pageRows > 0">
+  limit ${startRow},${pageRows}
+  </if>
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from mpurchase_app
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+   delete from mpurchase_app
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.car.model.MpurchaseAppExample">
+    delete from mpurchase_app
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.car.model.MpurchaseApp">
+      <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+      insert into mpurchase_app (no,name,gg,mtype,pintro,mstandard,num,price,plan_price,total_amount,dh_date,check_status,shbz)
+      values (	#{id,jdbcType=INTEGER},	#{no,jdbcType=VARCHAR},	#{name,jdbcType=VARCHAR},	#{gg,jdbcType=VARCHAR},	#{mtype,jdbcType=VARCHAR},	#{pintro,jdbcType=VARCHAR},	#{mstandard,jdbcType=VARCHAR},	#{num,jdbcType=INTEGER},	#{price,jdbcType=DOUBLE},	#{planPrice,jdbcType=DOUBLE},	#{totalAmount,jdbcType=DOUBLE},	#{dhDate,jdbcType=VARCHAR},	#{checkStatus,jdbcType=INTEGER},	#{shbz,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.car.model.MpurchaseApp">
+   <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+    insert into mpurchase_app
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+	  id,
+ </if>
+<if test="no != null" >
+	  no,
+ </if>
+<if test="name != null" >
+	  name,
+ </if>
+<if test="gg != null" >
+	  gg,
+ </if>
+<if test="mtype != null" >
+	  mtype,
+ </if>
+<if test="pintro != null" >
+	  pintro,
+ </if>
+<if test="mstandard != null" >
+	  mstandard,
+ </if>
+<if test="num != null" >
+	  num,
+ </if>
+<if test="price != null" >
+	  price,
+ </if>
+<if test="planPrice != null" >
+	  plan_price,
+ </if>
+<if test="totalAmount != null" >
+	  total_amount,
+ </if>
+<if test="dhDate != null" >
+	  dh_date,
+ </if>
+<if test="checkStatus != null" >
+	  check_status,
+ </if>
+<if test="shbz != null" >
+	  shbz
+ </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+         <if test="id != null" >
+	 #{id,jdbcType=INTEGER},
+	 </if>
+  <if test="no != null" >
+	 #{no,jdbcType=VARCHAR},
+	 </if>
+  <if test="name != null" >
+	 #{name,jdbcType=VARCHAR},
+	 </if>
+  <if test="gg != null" >
+	 #{gg,jdbcType=VARCHAR},
+	 </if>
+  <if test="mtype != null" >
+	 #{mtype,jdbcType=VARCHAR},
+	 </if>
+  <if test="pintro != null" >
+	 #{pintro,jdbcType=VARCHAR},
+	 </if>
+  <if test="mstandard != null" >
+	 #{mstandard,jdbcType=VARCHAR},
+	 </if>
+  <if test="num != null" >
+	 #{num,jdbcType=INTEGER},
+	 </if>
+  <if test="price != null" >
+	 #{price,jdbcType=DOUBLE},
+	 </if>
+  <if test="planPrice != null" >
+	 #{planPrice,jdbcType=DOUBLE},
+	 </if>
+  <if test="totalAmount != null" >
+	 #{totalAmount,jdbcType=DOUBLE},
+	 </if>
+  <if test="dhDate != null" >
+	 #{dhDate,jdbcType=VARCHAR},
+	 </if>
+  <if test="checkStatus != null" >
+	 #{checkStatus,jdbcType=INTEGER},
+	 </if>
+  <if test="shbz != null" >
+	 #{shbz,jdbcType=VARCHAR},
+	 </if>
+
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.car.model.MpurchaseAppExample" resultType="java.lang.Long">
+    select count(*) from mpurchase_app
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mpurchase_app
+    <set>
+       <if test="record.no != null" >
+	 no = #{record.no,jdbcType=VARCHAR},
+</if>
+ <if test="record.name != null" >
+	 name = #{record.name,jdbcType=VARCHAR},
+</if>
+ <if test="record.gg != null" >
+	 gg = #{record.gg,jdbcType=VARCHAR},
+</if>
+ <if test="record.mtype != null" >
+	 mtype = #{record.mtype,jdbcType=VARCHAR},
+</if>
+ <if test="record.pintro != null" >
+	 pintro = #{record.pintro,jdbcType=VARCHAR},
+</if>
+ <if test="record.mstandard != null" >
+	 mstandard = #{record.mstandard,jdbcType=VARCHAR},
+</if>
+ <if test="record.num != null" >
+	 num = #{record.num,jdbcType=INTEGER},
+</if>
+ <if test="record.price != null" >
+	 price = #{record.price,jdbcType=DOUBLE},
+</if>
+ <if test="record.planPrice != null" >
+	 plan_price = #{record.planPrice,jdbcType=DOUBLE},
+</if>
+ <if test="record.totalAmount != null" >
+	 total_amount = #{record.totalAmount,jdbcType=DOUBLE},
+</if>
+ <if test="record.dhDate != null" >
+	 dh_date = #{record.dhDate,jdbcType=VARCHAR},
+</if>
+ <if test="record.checkStatus != null" >
+	 check_status = #{record.checkStatus,jdbcType=INTEGER},
+</if>
+ <if test="record.shbz != null" >
+	 shbz = #{record.shbz,jdbcType=VARCHAR}
+</if>
+
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mpurchase_app
+    set 
+    				no = #{record.no,jdbcType=VARCHAR},	name = #{record.name,jdbcType=VARCHAR},	gg = #{record.gg,jdbcType=VARCHAR},	mtype = #{record.mtype,jdbcType=VARCHAR},	pintro = #{record.pintro,jdbcType=VARCHAR},	mstandard = #{record.mstandard,jdbcType=VARCHAR},	num = #{record.num,jdbcType=INTEGER},	price = #{record.price,jdbcType=DOUBLE},	plan_price = #{record.planPrice,jdbcType=DOUBLE},	total_amount = #{record.totalAmount,jdbcType=DOUBLE},	dh_date = #{record.dhDate,jdbcType=VARCHAR},	check_status = #{record.checkStatus,jdbcType=INTEGER},	shbz = #{record.shbz,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.car.model.MpurchaseApp">
+    update mpurchase_app
+    <set>
+       <if test="no != null" >
+	 no = #{no,jdbcType=VARCHAR},
+</if>
+ <if test="name != null" >
+	 name = #{name,jdbcType=VARCHAR},
+</if>
+ <if test="gg != null" >
+	 gg = #{gg,jdbcType=VARCHAR},
+</if>
+ <if test="mtype != null" >
+	 mtype = #{mtype,jdbcType=VARCHAR},
+</if>
+ <if test="pintro != null" >
+	 pintro = #{pintro,jdbcType=VARCHAR},
+</if>
+ <if test="mstandard != null" >
+	 mstandard = #{mstandard,jdbcType=VARCHAR},
+</if>
+ <if test="num != null" >
+	 num = #{num,jdbcType=INTEGER},
+</if>
+ <if test="price != null" >
+	 price = #{price,jdbcType=DOUBLE},
+</if>
+ <if test="planPrice != null" >
+	 plan_price = #{planPrice,jdbcType=DOUBLE},
+</if>
+ <if test="totalAmount != null" >
+	 total_amount = #{totalAmount,jdbcType=DOUBLE},
+</if>
+ <if test="dhDate != null" >
+	 dh_date = #{dhDate,jdbcType=VARCHAR},
+</if>
+ <if test="checkStatus != null" >
+	 check_status = #{checkStatus,jdbcType=INTEGER},
+</if>
+ <if test="shbz != null" >
+	 shbz = #{shbz,jdbcType=VARCHAR}
+</if>
+
+    </set>
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.car.model.MpurchaseApp">
+    update mpurchase_app
+    set 
+     			no = #{no,jdbcType=VARCHAR},	name = #{name,jdbcType=VARCHAR},	gg = #{gg,jdbcType=VARCHAR},	mtype = #{mtype,jdbcType=VARCHAR},	pintro = #{pintro,jdbcType=VARCHAR},	mstandard = #{mstandard,jdbcType=VARCHAR},	num = #{num,jdbcType=INTEGER},	price = #{price,jdbcType=DOUBLE},	plan_price = #{planPrice,jdbcType=DOUBLE},	total_amount = #{totalAmount,jdbcType=DOUBLE},	dh_date = #{dhDate,jdbcType=VARCHAR},	check_status = #{checkStatus,jdbcType=INTEGER},	shbz = #{shbz,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>
